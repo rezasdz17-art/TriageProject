@@ -35,8 +35,28 @@
             🔄 بازگشت به ثبت علائم
         </button>
 
-        <!-- ====== شماره تماس (جدید) ====== -->
-        <div style="text-align:center; margin-top:30px; padding-top:15px; border-top:2px solid #e2e8f0; color:#64748b; font-size:14px;">
+        <!-- ====== دکمه شیشه‌ای (فونت کوچیک) ====== -->
+        <div style="text-align:center; margin-top: 15px;">
+            <button onclick="toggleAbout()" style="background:rgba(255,255,255,0.3); backdrop-filter:blur(10px); border:1.5px solid rgba(59,130,246,0.4); padding:10px 20px; border-radius:30px; font-size:14px; font-weight:bold; color:#1e293b; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,0.08); transition:all 0.3s ease;">
+                ℹ️ درباره ما
+            </button>
+        </div>
+
+        <!-- ====== متن درباره ما (پنهان در ابتدا) ====== -->
+        <div id="aboutText" style="display:none; margin-top:15px; padding:18px; background:#f8fafc; border-radius:16px; border-right:4px solid #3b82f6; transition:all 0.5s ease;">
+            <p style="color:#475569; font-size:14px; line-height:2; margin:0;">
+                🏥 سامانه‌ی تریاژ آنلاین با هدف ارائه‌ی خدمات اولیه‌ی تریاژ به بیماران طراحی شده است.
+                <br><br>
+                این سامانه با استفاده از الگوریتم‌های ساده، سطح خطر بیمار را بر اساس علائم وارد شده تشخیص می‌دهد.
+                <br><br>
+                ⚠️ توجه: این سامانه جایگزین تشخیص پزشک نیست و صرفاً برای آگاهی اولیه طراحی شده است.
+                <br><br>
+                📌 پروژه‌ی درس آزمایشگاه نرم‌افزار - دانشگاه آزاد اسلامی
+            </p>
+        </div>
+
+        <!-- ====== شماره تماس ====== -->
+        <div style="text-align:center; margin-top: 20px; padding-top:15px; border-top:2px solid #e2e8f0; color:#64748b; font-size:14px;">
             <p style="margin:5px 0;">
                 📞 <strong>تماس با ما:</strong> ۰۹۱۵۰۸۱۷۴۲۱
             </p>
@@ -48,6 +68,16 @@
     </div>
 
     <script>
+        // تابع نمایش/مخفی کردن متن درباره ما
+        function toggleAbout() {
+            const aboutDiv = document.getElementById('aboutText');
+            if (aboutDiv.style.display === 'none' || aboutDiv.style.display === '') {
+                aboutDiv.style.display = 'block';
+            } else {
+                aboutDiv.style.display = 'none';
+            }
+        }
+
         window.onload = function() {
             const savedName = localStorage.getItem('userName');
             if (savedName) {
