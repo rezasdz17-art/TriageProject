@@ -19,7 +19,6 @@
             </div>
         </div>
 
-        <!-- ====== بقیه کد ====== -->
         <h1>📊 نتیجه تریاژ</h1>
 
         <!-- نمایش نام بیمار -->
@@ -35,11 +34,21 @@
         <button onclick="window.location.href='triage.html'" style="margin-top: 20px; width:100%; padding:14px; border:none; border-radius:50px; background:linear-gradient(to left, #2563eb, #7c3aed); color:white; font-size:18px; font-weight:bold; cursor:pointer; box-shadow:0 8px 25px rgba(37,99,235,0.3);">
             🔄 بازگشت به ثبت علائم
         </button>
+
+        <!-- ====== شماره تماس (جدید) ====== -->
+        <div style="text-align:center; margin-top:30px; padding-top:15px; border-top:2px solid #e2e8f0; color:#64748b; font-size:14px;">
+            <p style="margin:5px 0;">
+                📞 <strong>تماس با ما:</strong> ۰۹۱۵۰۸۱۷۴۲۱
+            </p>
+            <p style="margin:5px 0; font-size:13px; color:#94a3b8;">
+                در صورت نیاز به راهنمایی با ما تماس بگیرید.
+            </p>
+        </div>
+
     </div>
 
     <script>
         window.onload = function() {
-            // نمایش نام بیمار
             const savedName = localStorage.getItem('userName');
             if (savedName) {
                 document.getElementById('userNameDisplay').textContent = savedName;
@@ -47,7 +56,6 @@
                 document.getElementById('userNameDisplay').textContent = 'بیمار (ثبت‌نام نشده)';
             }
 
-            // گرفتن اطلاعات از URL
             const params = new URLSearchParams(window.location.search);
             const temp = parseFloat(params.get('temp')) || 0;
             const fever = params.get('fever');
@@ -61,7 +69,6 @@
             let level = 'green';
             let message = '';
 
-            // ---- منطق تشخیص ----
             if (temp >= 39 || dyspnea === 'yes' || (fever === 'yes' && temp >= 38)) {
                 level = 'red';
                 message = '🚨 سطح خطر: قرمز (نیاز به اقدام فوری پزشکی!)';
@@ -73,7 +80,6 @@
                 message = '✅ سطح خطر: سبز (وضعیت پایدار است، نیاز به مراقبت معمول)';
             }
 
-            // ---- دریافت تاریخ و ساعت ایران ----
             const now = new Date();
             const persianDate = now.toLocaleDateString('fa-IR', {
                 timeZone: 'Asia/Tehran'
@@ -84,15 +90,11 @@
                 timeZone: 'Asia/Tehran'
             });
 
-            // نمایش نتیجه با رنگ مناسب
             resultDiv.className = level === 'red' ? 'danger' : (level === 'orange' ? 'warning' : 'success');
             resultDiv.innerHTML = message;
 
-            // اضافه کردن نام بیمار
             const name = localStorage.getItem('userName') || 'بیمار';
             resultDiv.innerHTML += `<br><small style="font-size:14px; color:#475569; display:block; margin-top:10px;">👤 نام بیمار: ${name}</small>`;
-
-            // اضافه کردن تاریخ و ساعت ایران
             resultDiv.innerHTML += `<br><small style="font-size:13px; color:#64748b; display:block; margin-top:5px;">🕐 تاریخ و ساعت ثبت: ${persianDate} - ${persianTime}</small>`;
         };
     </script>
