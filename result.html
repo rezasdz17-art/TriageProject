@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>نتیجه تریاژ</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.result{
+margin-top:20px;
+padding:20px;
+border-radius:10px;
+font-size:18px;
+text-align:center;
+font-weight:bold;
+}
+
+.green{
+background:#d4edda;
+color:#155724;
+}
+
+.orange{
+background:#fff3cd;
+color:#856404;
+}
+
+.red{
+background:#f8d7da;
+color:#721c24;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🤖 نتیجه تحلیل علائم</h1>
+
+<div id="result" class="result"></div>
+
+<br>
+
+<a href="index.html">
+<button>بازگشت به صفحه اصلی</button>
+</a>
+
+</div>
+
+<script>
+
+const params=new URLSearchParams(window.location.search);
+
+let fever=params.get("fever");
+let cough=params.get("cough");
+let breath=params.get("breath");
+let throat=params.get("throat");
+let head=params.get("head");
+let pain=params.get("pain");
+let temp=parseFloat(params.get("temp"));
+
+let box=document.getElementById("result");
+
+if(
+fever=="yes" &&
+cough=="yes" &&
+breath=="yes"
+){
+
+box.className="result red";
+
+box.innerHTML=
+"🔴 <br><br>سطح خطر : زیاد <br><br> علائم شما نیاز به بررسی فوری دارد. لطفاً در اسرع وقت به پزشک یا مرکز درمانی مراجعه کنید.";
+
+}
+
+else if(
+
+fever=="yes" &&
+(throat=="yes" || head=="yes")
+
+){
+
+box.className="result orange";
+
+box.innerHTML=
+"🟡 <br><br>سطح خطر : متوسط <br><br> استراحت کنید، مایعات کافی مصرف کنید و در صورت بدتر شدن علائم به پزشک مراجعه نمایید.";
+
+}
+
+else if(temp>=39){
+
+box.className="result red";
+
+box.innerHTML=
+"🔴 <br><br>تب بسیار بالا مشاهده شد. مراجعه سریع به پزشک توصیه می‌شود.";
+
+}
+
+else{
+
+box.className="result green";
+
+box.innerHTML=
+"🟢 <br><br>سطح خطر : کم <br><br> علائم فعلاً شدید نیست. استراحت، مصرف مایعات و پیگیری وضعیت توصیه می‌شود.";
+
+}
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ثبت علائم بیمار</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🩺 ثبت علائم بیمار</h1>
+
+<form action="result.html" method="GET">
+
+<label>دمای بدن</label>
+<input
+type="number"
+name="temp"
+min="34"
+max="42"
+step="0.1"
+required>
+
+<label>تب</label>
+<select name="fever" required>
+<option value="">انتخاب کنید</option>
+<option value="yes">دارد</option>
+<option value="no">ندارد</option>
+</select>
+
+<label>سرفه</label>
+<select name="cough" required>
+<option value="">انتخاب کنید</option>
+<option value="yes">دارد</option>
+<option value="no">ندارد</option>
+</select>
+
+<label>تنگی نفس</label>
+<select name="breath" required>
+<option value="">انتخاب کنید</option>
+<option value="yes">دارد</option>
+<option value="no">ندارد</option>
+</select>
+
+<label>گلودرد</label>
+<select name="throat" required>
+<option value="">انتخاب کنید</option>
+<option value="yes">دارد</option>
+<option value="no">ندارد</option>
+</select>
+
+<label>سردرد</label>
+<select name="head" required>
+<option value="">انتخاب کنید</option>
+<option value="yes">دارد</option>
+<option value="no">ندارد</option>
+</select>
+
+<label>میزان درد</label>
+<select name="pain" required>
+<option value="">انتخاب کنید</option>
+<option value="low">کم</option>
+<option value="medium">متوسط</option>
+<option value="high">شدید</option>
+</select>
+
+<button type="submit">
+
+🤖 تحلیل علائم
+
+</button>
+
+</form>
+
+</div>
+
+</body>
+
+</html>
