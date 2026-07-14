@@ -2,121 +2,76 @@
 <html lang="fa" dir="rtl">
 
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>نتیجه تریاژ</title>
-
-<link rel="stylesheet" href="style.css">
-
-<style>
-
-.result{
-margin-top:20px;
-padding:20px;
-border-radius:10px;
-font-size:18px;
-text-align:center;
-font-weight:bold;
-}
-
-.green{
-background:#d4edda;
-color:#155724;
-}
-
-.orange{
-background:#fff3cd;
-color:#856404;
-}
-
-.red{
-background:#f8d7da;
-color:#721c24;
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتیجه تریاژ</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <div class="container">
+        <h1>📊 نتیجه تریاژ</h1>
 
-<div class="container">
+        <!-- نمایش نام بیمار -->
+        <div id="greeting" style="background: #e0f2fe; padding: 12px 16px; border-radius: 16px; text-align: center; font-weight: bold; margin-bottom: 20px; color: #075985;">
+            👤 بیمار: <span id="userNameDisplay">نامشخص</span>
+        </div>
 
-<h1>🤖 نتیجه تحلیل علائم</h1>
+        <!-- نمایش نتیجه -->
+        <div id="result" style="padding: 20px; border-radius: 16px; text-align: center; font-weight: bold; font-size: 18px;">
+            در حال تحلیل...
+        </div>
 
-<div id="result" class="result"></div>
+        <button onclick="window.location.href='triage.html'" style="margin-top: 20px;">
+            🔄 بازگشت به ثبت علائم
+        </button>
+    </div>
 
-<br>
+    <script>
+        window.onload = function() {
+            // نمایش نام بیمار
+            const savedName = localStorage.getItem('userName');
+            if (savedName) {
+                document.getElementById('userNameDisplay').textContent = savedName;
+            } else {
+                document.getElementById('userNameDisplay').textContent = 'بیمار (ثبت‌نام نشده)';
+            }
 
-<a href="index.html">
-<button>بازگشت به صفحه اصلی</button>
-</a>
+            // گرفتن اطلاعات از URL (با اسم‌های انگلیسی جدید)
+            const params = new URLSearchParams(window.location.search);
+            const temp = parseFloat(params.get('temp')) || 0;
+            const fever = params.get('fever');
+            const cough = params.get('cough');
+            const dyspnea = params.get('dyspnea');
+            const throat = params.get('throat');
+            const headache = params.get('headache');
+            const pain = params.get('pain');
 
-</div>
+            const resultDiv = document.getElementById('result');
+            let level = 'green';
+            let message = '';
 
-<script>
+            // ---- منطق تشخیص (همان قبلی) ----
+            if (temp >= 39 || dyspnea === 'yes' || (fever === 'yes' && temp >= 38)) {
+                level = 'red';
+                message = '🚨 سطح خطر: قرمز (نیاز به اقدام فوری پزشکی!)';
+            } else if (temp >= 38 || fever === 'yes' || cough === 'yes' || throat === 'yes' || pain === 'high') {
+                level = 'orange';
+                message = '⚠️ سطح خطر: نارنجی (نیاز به بررسی سریع توسط پزشک)';
+            } else {
+                level = 'green';
+                message = '✅ سطح خطر: سبز (وضعیت پایدار است، نیاز به مراقبت معمول)';
+            }
 
-const params=new URLSearchParams(window.location.search);
+            // نمایش نتیجه با رنگ مناسب
+            resultDiv.className = level === 'red' ? 'danger' : (level === 'orange' ? 'warning' : 'success');
+            resultDiv.innerHTML = message;
 
-let fever=params.get("fever");
-let cough=params.get("cough");
-let breath=params.get("breath");
-let throat=params.get("throat");
-let head=params.get("head");
-let pain=params.get("pain");
-let temp=parseFloat(params.get("temp"));
-
-let box=document.getElementById("result");
-
-if(
-fever=="yes" &&
-cough=="yes" &&
-breath=="yes"
-){
-
-box.className="result red";
-
-box.innerHTML=
-"🔴 <br><br>سطح خطر : زیاد <br><br> علائم شما نیاز به بررسی فوری دارد. لطفاً در اسرع وقت به پزشک یا مرکز درمانی مراجعه کنید.";
-
-}
-
-else if(
-
-fever=="yes" &&
-(throat=="yes" || head=="yes")
-
-){
-
-box.className="result orange";
-
-box.innerHTML=
-"🟡 <br><br>سطح خطر : متوسط <br><br> استراحت کنید، مایعات کافی مصرف کنید و در صورت بدتر شدن علائم به پزشک مراجعه نمایید.";
-
-}
-
-else if(temp>=39){
-
-box.className="result red";
-
-box.innerHTML=
-"🔴 <br><br>تب بسیار بالا مشاهده شد. مراجعه سریع به پزشک توصیه می‌شود.";
-
-}
-
-else{
-
-box.className="result green";
-
-box.innerHTML=
-"🟢 <br><br>سطح خطر : کم <br><br> علائم فعلاً شدید نیست. استراحت، مصرف مایعات و پیگیری وضعیت توصیه می‌شود.";
-
-}
-
-</script>
-
+            // اضافه کردن نام بیمار
+            const name = localStorage.getItem('userName') || 'بیمار';
+            resultDiv.innerHTML += `<br><small style="font-size:14px; color:#475569; display:block; margin-top:10px;">👤 نام بیمار: ${name}</small>`;
+        };
+    </script>
 </body>
 
 </html>
