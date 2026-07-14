@@ -37,7 +37,7 @@
                 document.getElementById('userNameDisplay').textContent = 'بیمار (ثبت‌نام نشده)';
             }
 
-            // گرفتن اطلاعات از URL (با اسم‌های انگلیسی جدید)
+            // گرفتن اطلاعات از URL
             const params = new URLSearchParams(window.location.search);
             const temp = parseFloat(params.get('temp')) || 0;
             const fever = params.get('fever');
@@ -51,7 +51,7 @@
             let level = 'green';
             let message = '';
 
-            // ---- منطق تشخیص (همان قبلی) ----
+            // ---- منطق تشخیص ----
             if (temp >= 39 || dyspnea === 'yes' || (fever === 'yes' && temp >= 38)) {
                 level = 'red';
                 message = '🚨 سطح خطر: قرمز (نیاز به اقدام فوری پزشکی!)';
@@ -63,6 +63,17 @@
                 message = '✅ سطح خطر: سبز (وضعیت پایدار است، نیاز به مراقبت معمول)';
             }
 
+            // ---- دریافت تاریخ و ساعت ایران (بدون ثانیه) ----
+            const now = new Date();
+            const persianDate = now.toLocaleDateString('fa-IR', {
+                timeZone: 'Asia/Tehran'
+            });
+            const persianTime = now.toLocaleTimeString('fa-IR', {
+                hour: '2-digit',
+                minute: '2-digit',
+                timeZone: 'Asia/Tehran'
+            });
+
             // نمایش نتیجه با رنگ مناسب
             resultDiv.className = level === 'red' ? 'danger' : (level === 'orange' ? 'warning' : 'success');
             resultDiv.innerHTML = message;
@@ -70,6 +81,9 @@
             // اضافه کردن نام بیمار
             const name = localStorage.getItem('userName') || 'بیمار';
             resultDiv.innerHTML += `<br><small style="font-size:14px; color:#475569; display:block; margin-top:10px;">👤 نام بیمار: ${name}</small>`;
+
+            // اضافه کردن تاریخ و ساعت ایران
+            resultDiv.innerHTML += `<br><small style="font-size:13px; color:#64748b; display:block; margin-top:5px;">🕐 تاریخ و ساعت ثبت: ${persianDate} - ${persianTime}</small>`;
         };
     </script>
 </body>
